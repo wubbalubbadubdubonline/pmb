@@ -1,3 +1,3 @@
 # pmb
-modbot and evalbot for programming discord server
-spaghetti code
+modbot and evalbot for programming discord server,
+ it's total spaghetti code
