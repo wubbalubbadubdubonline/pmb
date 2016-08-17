@@ -16,6 +16,9 @@ authed_invite = []
 roles = ["asm", "c", "c++", "c#", "python", "java", "javascript", "lua", "rust", "ruby", "perl", 
 			"web-dev", "mobile-dev", "php", "swift", "bash", "obj-c", "go", "visual-basic", "minecraft"]
 
+global bot_startup
+bot_startup = 0
+
 async def kick(member):
 	await client.kick(member)
 
@@ -106,6 +109,8 @@ async def on_ready():
 	print(client.user.name)
 	print(client.user.id)
 	print('-'*20)
+	global bot_startup
+	bot_startup = time()
 	print(discord.utils.oauth_url("182625223101775872"))
 	await client.change_status(game=discord.Game(name="help!"))
 	try:
@@ -396,6 +401,19 @@ async def on_message(msg):
 						await client.send_message(msg.channel, "an error occurred and member role was not added. please pm a mod or admin")
 
 
+		elif msg.content.lower().startswith("uptime!"):
+			uptime = int(time() - bot_startup)
+			uptime = [ int(uptime//(24*60*60))%365, int(uptime//(24*60*60))%28, int(uptime//(24*60*60))%7, int(uptime//(60*60))%24, int(uptime//60)%60, int(uptime)%60 ]
+			response =  "{} years,".format(uptime[0]) if uptime[0] else ""
+			response += " {} moons,".format(uptime[1]) if uptime[1] else ""
+			response += " {} days,".format(uptime[2]) if uptime[2] else ""
+			response += " {} hours,".format(uptime[3]) if uptime[3] else ""
+			response += " {} minutes,".format(uptime[4]) if uptime[4] else ""
+			response += " {} seconds".format(uptime[5]) if uptime[5] else ""
+			response = '`' + response + '`'
+			await client.send_message(msg.channel, response)
+
+
 		elif msg.content.lower().startswith("help!"):
 			message = "```xl\nModeration Commands:\n\tsilence! <@user | @user list>: adds silent role to user(s)\n\t"
 			message += "unsilence! <@user>: removes silent role from user\n\tkick! <@user | @user list>: kicks user(s)\n\t"
@@ -412,7 +430,7 @@ async def on_message(msg):
 
 
 token = ""
-with open("/home/ohmyginger94/auth", "r") as f:
+with open("/home/ohmyginger94/pmb/auth", "r") as f:
 	token = f.read()
 
 client.run(token)
