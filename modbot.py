@@ -13,7 +13,8 @@ silences = {}
 
 authed_invite = []
 
-roles = ["asm", "c", "c++", "c#", "python", "java", "javascript", "lua", "rust", "ruby", "perl", "web-dev", "mobile-dev", "php"]
+roles = ["asm", "c", "c++", "c#", "python", "java", "javascript", "lua", "rust", "ruby", "perl", 
+			"web-dev", "mobile-dev", "php", "swift", "bash", "obj-c", "go", "visual-basic", "minecraft"]
 
 async def kick(member):
 	await client.kick(member)
@@ -405,7 +406,7 @@ async def on_message(msg):
 			message += "avatar! [@user | @user list]: get the avatar of one or more users\n\teval! <expression>: do math using the eval function from python```"
 			if msg.server.id == "181866934353133570":
 				message = message[:-3] + "\n\tjoinrole! <rolename>: join one of the language roles :D\n\tleaverole! <rolename>: leave one of the language roles D:\n\t"
-				message += "roles!: list the available roles```"
+				message += "roles!: list the available roles\n\nWe have a minecraft server! use joinrole! and join the minecraft role if you are interested```"
 			await client.send_message(msg.channel, message)
 			await client.delete_message(msg)
 

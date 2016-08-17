@@ -12,11 +12,74 @@ allowed_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'x',
 				'0', '1', '2', '3', '4', '5', '6', 
 				'7', '8', '9', '(', ')', '\t', '\r', 
 				'\n', ' ', '+', '*', '/', '-', '.', 
-				'^', '&', '|', '~', '<', '>', '[', ']', ',', '!']
-allowed_words = ["math", "len", " for ", " in ", " if ", " not "]
-for x in dir(math):
+				'^', '&', '|', '~', '<', '>', '[', ']', ',', '!', '%']
+allowed_words = ["math", "len", " for ", " in ", " if ", " not ", "range", "==", "!="]
+safe_math = [x for x in dir(math) if not x.startswith("_")]
+for x in safe_math:
 	allowed_words.append(x)
+"""
+def check_timeout(seconds, func, *args):
+	index = 0
+	fname = "automod/dump_" + str(index)
+	while os.path.exists(fname):
+		index += 1
+		fname = "automod/dump_" + str(index)
+	f = open(fname+"_func", "wb")
+	marshal.dump(func.__code__, f)
+	f.close()
+	for i in range(len(args)):
+		f = open(fname + "_obj_" + str(i), "wb")
+		for obj in args:
+			pickle.dump(obj, f)
+		f.close()
 
+	result = subprocess.call(["python", "safeexec_sub.py", str(seconds), fname])
+	os.remove(fname + "_func")
+	for i in range(len(args)):
+		os.remove(fname + "_obj_" + str(i))
+
+	if result == 1:
+		return True
+	return False
+"""
+
+"""
+import signal, pickle, safeexec, sys, marshal, types, traceback, os
+
+def _handle_timeout(a, b):
+	raise safeexec.ExecTimeoutError
+
+def check_timeout(seconds, func, *args):
+	try:
+		signal.signal(signal.SIGALRM, _handle_timeout)
+		signal.alarm(seconds)
+		try:
+			func(*args)
+		finally:
+			signal.alarm(0)
+	except:
+		traceback.print_exc()
+		return False
+	return True
+
+if __name__  == "__main__":
+	args = sys.argv
+	seconds = int(args[1])
+	fname = args[2]
+	f = open(fname + "_func", "rb")
+	args.append(types.FunctionType(marshal.load(f), globals(), "func"))
+	f.close()
+
+	index = 0
+	while os.path.exists(fname + "_obj_" + str(index)):
+		f = open(fname + "_obj_" + str(index), "rb")
+		args.append(pickle.load(f))
+		f.close()
+		index += 1
+
+	if check_timeout(seconds, *args[3:]):
+		exit(1)
+"""
 
 @client.event
 async def on_ready():
@@ -37,15 +100,14 @@ async def on_message(msg):
 			await client.send_message(msg.channel, '`'+str(result)+'`')
 		elif msg.author.id not in noeval:
 			expr = " ".join(msg.content.lower().split()[1:])
-			while True:
+			found = True
+			while found:
 				found = False
 				for x in allowed_words:
 					pos = expr.find(x)
 					if pos > -1:
 						found = True
 						expr = expr[:pos] + expr[pos+len(x):]
-				if not found:
-					break
 			for x in expr:
 				if x not in allowed_chars:
 					return
@@ -71,6 +133,7 @@ async def on_message(msg):
 				if x.permissions.manage_messages:
 					authorized = True
 					break
+		if authorized:
 			await client.delete_message(msg)
 			quit()
 
