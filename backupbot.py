@@ -12,8 +12,9 @@ allowed_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'x',
 				'0', '1', '2', '3', '4', '5', '6', 
 				'7', '8', '9', '(', ')', '\t', '\r', 
 				'\n', ' ', '+', '*', '/', '-', '.', 
-				'^', '&', '|', '~', '<', '>', '[', ']', ',', '!', '%']
-allowed_words = ["math", "len", " for ", " in ", " if ", " not ", "range", "==", "!="]
+				'^', '&', '|', '~', '<', '>', '[', 
+				']', ',', '!', '%']
+allowed_words = ["math", "len", " for ", " in ", " if ", " not ", "range", "==", "!=", "True", "False"]
 safe_math = [x for x in dir(math) if not x.startswith("_")]
 for x in safe_math:
 	allowed_words.append(x)
@@ -139,7 +140,7 @@ async def on_message(msg):
 
 
 token = ""
-with open("/home/ohmyginger94/auth", "r") as f:
+with open("/home/ohmyginger94/pmb/auth", "r") as f:
 	token = f.read()
 
 client.run(token)
