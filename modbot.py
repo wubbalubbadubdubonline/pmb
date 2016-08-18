@@ -421,7 +421,8 @@ async def on_message(msg):
 			message += "allowinvite! <@user | @user list>: allow user(s) to post an invitation to another server\n\t"
 			message += "clean! <number> [@user | @user list]: purge messages from chat\nGeneral Commands:\n\t"
 			message += "serverinfo!: get information on the server\n\tid! [@user | @user list | #channel | #channel list]: get user or channel ids\n\t"
-			message += "avatar! [@user | @user list]: get the avatar of one or more users\n\teval! <expression>: do math using the eval function from python```"
+			message += "avatar! [@user | @user list]: get the avatar of one or more users\n\teval! <expression>: do math using the eval function from python\n\t"
+			message += "g! <query>: get a lmgtfy link for query```"
 			if msg.server.id == "181866934353133570":
 				message = message[:-3] + "\n\tjoinrole! <rolename>: join one of the language roles :D\n\tleaverole! <rolename>: leave one of the language roles D:\n\t"
 				message += "roles!: list the available roles\n\nWe have a minecraft server! use joinrole! and join the minecraft role if you are interested```"
@@ -430,7 +431,7 @@ async def on_message(msg):
 
 
 token = ""
-with open("/home/ohmyginger94/pmb/auth", "r") as f:
+with open("./auth", "r") as f:
 	token = f.read()
 
 client.run(token)

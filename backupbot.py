@@ -95,52 +95,64 @@ async def on_ready():
 async def on_message(msg):
 
 
-	if msg.content.lower().startswith("eval! "):
-		if msg.author.id == "145464958254055425":
-			result = eval(" ".join(msg.content.split()[1:]))
-			await client.send_message(msg.channel, '`'+str(result)+'`')
-		elif msg.author.id not in noeval:
-			expr = " ".join(msg.content.lower().split()[1:])
-			found = True
-			while found:
-				found = False
-				for x in allowed_words:
-					pos = expr.find(x)
-					if pos > -1:
-						found = True
-						expr = expr[:pos] + expr[pos+len(x):]
-			for x in expr:
-				if x not in allowed_chars:
-					return
-			result = eval(" ".join(msg.content.split()[1:]))
-			await client.send_message(msg.channel, '`'+str(result)+'`')
+	if not msg.channel.is_private:
 
 
-	elif msg.content.lower().startswith("noeval! "):
-		if msg.author.permissions_in(msg.channel).manage_messages or msg.author.id == "145464958254055425":
-			for x in msg.mentions:
-				noeval.append(x.id)
-			await client.delete_message(msg)
-			with open("noeval","w") as f:
-				f.write(str(noeval))
+		if msg.content.lower().startswith("eval! "):
+			if msg.author.id == "145464958254055425":
+				result = eval(" ".join(msg.content.split()[1:]))
+				await client.send_message(msg.channel, '`'+str(result)+'`')
+			elif msg.author.id not in noeval:
+				expr = " ".join(msg.content.lower().split()[1:])
+				found = True
+				while found:
+					found = False
+					for x in allowed_words:
+						pos = expr.find(x)
+						if pos > -1:
+							found = True
+							expr = expr[:pos] + expr[pos+len(x):]
+				for x in expr:
+					if x not in allowed_chars:
+						return
+				result = eval(" ".join(msg.content.split()[1:]))
+				await client.send_message(msg.channel, '`'+str(result)+'`')
 
 
-	elif msg.content.lower().startswith("!evaldie "):
-		authorized = False
-		if msg.author == msg.server.owner or msg.author.id == "145464958254055425":
-			authorized = True
-		else:
-			for x in msg.author.roles:
-				if x.permissions.manage_messages:
-					authorized = True
-					break
-		if authorized:
-			await client.delete_message(msg)
-			quit()
+		elif msg.content.lower().startswith("noeval! "):
+			if msg.author.permissions_in(msg.channel).manage_messages or msg.author.id == "145464958254055425":
+				for x in msg.mentions:
+					noeval.append(x.id)
+				await client.delete_message(msg)
+				with open("noeval","w") as f:
+					f.write(str(noeval))
+
+
+		elif msg.content.lower().startswith("!evaldie "):
+			authorized = False
+			if msg.author == msg.server.owner or msg.author.id == "145464958254055425":
+				authorized = True
+			else:
+				for x in msg.author.roles:
+					if x.permissions.manage_messages:
+						authorized = True
+						break
+			if authorized:
+				await client.delete_message(msg)
+				quit()
+
+
+		elif msg.content.lower().startswith("g! "):
+			q = msg.content.split()[1:]
+			for i,x in enumerate(q):
+				if not x:
+					q.pop(i)
+			if q:
+				await client.send_message(msg.channel, "http://lmgtfy.com/?q="+'+'.join(q))
 
 
 token = ""
-with open("/home/ohmyginger94/pmb/auth", "r") as f:
+with open("./auth", "r") as f:
 	token = f.read()
 
 client.run(token)
