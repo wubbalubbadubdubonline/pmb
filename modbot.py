@@ -174,10 +174,11 @@ async def on_message(msg):
 				if value:
 					count = 0
 					for message in reversed(client.messages):
-						await client.delete_message(message)
-						count+=1
-						if count >= value:
-							break
+						if message.channel == msg.channel:
+							await client.delete_message(message)
+							count+=1
+							if count >= value:
+								break
 
 
 		elif msg.content.lower().startswith("unban!"):
