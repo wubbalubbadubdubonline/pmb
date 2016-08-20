@@ -105,6 +105,12 @@ async def on_member_join(member):
 		await client.add_roles(member, role[0])
 
 
+@client.event
+async def on_member_ban(member):
+	if member.server.id == "181866934353133570":
+		await client.send_message(member.server.get_channel("190198266955038721"), "{} : {} was banned.".format(member.name,member.id))
+
+
 
 @client.event
 async def on_ready():
