@@ -14,7 +14,8 @@ silences = {}
 authed_invite = []
 
 roles = ["asm", "c", "c++", "c#", "python", "java", "javascript", "lua", "rust", "ruby", "perl", 
-			"web-dev", "mobile-dev", "php", "swift", "bash", "obj-c", "go", "visual-basic", "minecraft"]
+			"web-dev", "mobile-dev", "php", "swift", "bash", "obj-c", "go", "visual-basic", 
+			"linux", "mac-os", "windows", "minecraft"]
 
 global bot_startup
 bot_startup = 0
