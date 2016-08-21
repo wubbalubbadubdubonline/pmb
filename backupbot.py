@@ -147,6 +147,8 @@ async def on_message(msg):
 			for i,x in enumerate(q):
 				if not x:
 					q.pop(i)
+				elif '+' in x:
+					q[i] = x.replace('+','%2B')
 			if q:
 				await client.send_message(msg.channel, "http://lmgtfy.com/?q="+'+'.join(q))
 
