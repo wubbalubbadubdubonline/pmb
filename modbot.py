@@ -340,17 +340,23 @@ async def on_message(msg):
 
 		elif msg.content.lower().startswith("!joinrole "):
 			splitted = msg.content.split()
-			delet = False
 			s = client.get_server("181866934353133570")
+			failed_roles = []
 			if msg.server == s:
 				for x in splitted[1:]:
 					role = [y for y in roles if x.lower() == y.lower()]
 					if role:
 						role = [y for y in msg.server.roles if y.name.lower() == x.lower()]
 						await client.add_roles(msg.author, role[0])
-						delet = True
-			if delet:
-				await client.delete_message(msg)
+					else:
+						failed_roles.append(x)
+				if failed_roles:
+					blah = await client.send_message(msg.channel, 
+						"```\nthe following roles do not exist or you are not allowed to join them:\n"+
+						'\n'.join(failed_roles) + "\n```")
+					await asyncio.sleep(10)
+					await client.delete_message(blah)
+			await client.delete_message(msg)
 
 
 		elif msg.content.lower().startswith("!leaverole "):
