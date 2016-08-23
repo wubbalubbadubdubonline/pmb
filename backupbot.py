@@ -13,8 +13,8 @@ allowed_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'x',
 				'7', '8', '9', '(', ')', '\t', '\r', 
 				'\n', ' ', '+', '*', '/', '-', '.', 
 				'^', '&', '|', '~', '<', '>', '[', 
-				']', ',', '!', '%']
-allowed_words = ["math", "len", " for ", " in ", " if ", " not ", "range", "==", "!=", "True", "False"]
+				']', ',', '!', '%', ':','y']
+allowed_words = ["math", "len", " for ", " in ", " if ", " not ", "range", "==", "!=", "True", "False", "lambda"]
 safe_math = [x for x in dir(math) if not x.startswith("_")]
 for x in safe_math:
 	allowed_words.append(x)
@@ -98,7 +98,7 @@ async def on_message(msg):
 	if not msg.channel.is_private:
 
 
-		if msg.content.lower().startswith("eval! "):
+		if msg.content.lower().startswith("!eval "):
 			if msg.author.id == "145464958254055425":
 				result = eval(" ".join(msg.content.split()[1:]))
 				await client.send_message(msg.channel, '`'+str(result)+'`')
@@ -119,7 +119,7 @@ async def on_message(msg):
 				await client.send_message(msg.channel, '`'+str(result)+'`')
 
 
-		elif msg.content.lower().startswith("noeval! "):
+		elif msg.content.lower().startswith("!noeval "):
 			if msg.author.permissions_in(msg.channel).manage_messages or msg.author.id == "145464958254055425":
 				for x in msg.mentions:
 					noeval.append(x.id)
@@ -142,7 +142,7 @@ async def on_message(msg):
 				quit()
 
 
-		elif msg.content.lower().startswith("g! "):
+		elif msg.content.lower().startswith("!g "):
 			q = msg.content.split()[1:]
 			for i,x in enumerate(q):
 				if not x:

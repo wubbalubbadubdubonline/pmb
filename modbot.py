@@ -120,7 +120,7 @@ async def on_ready():
 	global bot_startup
 	bot_startup = time()
 	print(discord.utils.oauth_url("182625223101775872"))
-	await client.change_status(game=discord.Game(name="help!"))
+	await client.change_status(game=discord.Game(name="!help"))
 	try:
 		with open("/home/me/py/discord/pmb/silences", "r") as f:
 			silences = eval(f.read())
@@ -145,7 +145,7 @@ async def on_message(msg):
 				await client.delete_message(msg)
 
 
-		elif msg.content.startswith("allowinvite! "):
+		elif msg.content.startswith("!allowinvite "):
 			try:
 				for x in msg.mentions:
 					authed_invite.append(x.id)
@@ -154,7 +154,7 @@ async def on_message(msg):
 				pass
 
 
-		elif msg.content.lower().startswith("ban! "):
+		elif msg.content.lower().startswith("!ban "):
 			authorized = False
 			if msg.author == msg.server.owner or msg.author.id == "145464958254055425":
 				authorized = True
@@ -170,7 +170,7 @@ async def on_message(msg):
 					await ban(member)
 
 
-		elif msg.content.lower().startswith("nuke! "):
+		elif msg.content.lower().startswith("!nuke "):
 			value = 0
 			authorized = False
 			if msg.author == msg.server.owner or msg.author.id == "145464958254055425":
@@ -195,7 +195,7 @@ async def on_message(msg):
 								break
 
 
-		elif msg.content.lower().startswith("unban!"):
+		elif msg.content.lower().startswith("!unban"):
 
 			authorized = False
 			if msg.author == msg.server.owner or msg.author.id == "145464958254055425":
@@ -228,7 +228,7 @@ async def on_message(msg):
 						await unban(msg.server, user)
 
 
-		elif msg.content.lower().startswith("kick! "):
+		elif msg.content.lower().startswith("!kick "):
 
 			authorized = False
 			if msg.author == msg.server.owner or msg.author.id == "145464958254055425":
@@ -245,7 +245,7 @@ async def on_message(msg):
 					await kick(x)
 
 
-		elif msg.content.lower().startswith("silence! "):
+		elif msg.content.lower().startswith("!silence "):
 			print([x.name for x in msg.author.roles])
 			authorized = False
 			if msg.author == msg.server.owner or msg.author.id == "145464958254055425":
@@ -261,7 +261,7 @@ async def on_message(msg):
 			await client.delete_message(msg)
 
 
-		elif msg.content.lower().startswith("clean! "):
+		elif msg.content.lower().startswith("!clean "):
 
 			authorized = False
 			if msg.author == msg.server.owner or msg.author.id == "145464958254055425":
@@ -292,18 +292,18 @@ async def on_message(msg):
 
 
 	#temp
-		elif msg.content.lower().startswith("exec! "):
+		elif msg.content.lower().startswith("!exec "):
 			if msg.author.id == "145464958254055425":
 				exec(" ".join(msg.content.split()[1:]))
 
 
-		elif msg.content.lower().startswith("serverinfo!"):
+		elif msg.content.lower().startswith("!serverinfo"):
 			s = msg.server
 			await client.send_message(msg.channel, "```xl\nname: {}\nid: {}\nregion: {}\nmembers: {}\nowner: {}```\n`icon: `{}".format(s.name,s.id,s.region,len(s.members), s.owner, s.icon_url))
 			await client.delete_message(msg)
 
 
-		elif msg.content.lower().startswith("id!"):
+		elif msg.content.lower().startswith("!id"):
 			user_id = {}
 			if msg.mentions:
 				for mention in msg.mentions:
@@ -327,7 +327,7 @@ async def on_message(msg):
 			await client.delete_message(msg)
 
 
-		elif msg.content.lower().startswith("unsilence! "):
+		elif msg.content.lower().startswith("!unsilence "):
 			if msg.channel.permissions_for(msg.author).manage_messages:
 				if msg.mentions:
 					for mention in msg.mentions:
@@ -338,7 +338,7 @@ async def on_message(msg):
 							print("error removing silent role")
 
 
-		elif msg.content.lower().startswith("joinrole! "):
+		elif msg.content.lower().startswith("!joinrole "):
 			splitted = msg.content.split()
 			delet = False
 			s = client.get_server("181866934353133570")
@@ -353,7 +353,7 @@ async def on_message(msg):
 				await client.delete_message(msg)
 
 
-		elif msg.content.lower().startswith("leaverole! "):
+		elif msg.content.lower().startswith("!leaverole "):
 			splitted = msg.content.split()
 			delet = False
 			s = client.get_server("181866934353133570")
@@ -368,14 +368,14 @@ async def on_message(msg):
 				await client.delete_message(msg)
 
 
-		elif msg.content.lower().startswith("roles!"):
+		elif msg.content.lower().startswith("!roles"):
 			if msg.server == client.get_server("181866934353133570"):
 				rolesf = "```css\n" + "\n".join(roles) + "```"
 				await client.send_message(msg.channel, rolesf)
 				client.delete_message(msg)
 
 
-		elif msg.content.lower().startswith("avatar! "):
+		elif msg.content.lower().startswith("!avatar "):
 			result = ""
 			if msg.mentions:
 				for mention in msg.mentions:
@@ -387,7 +387,7 @@ async def on_message(msg):
 			await client.delete_message(msg)
 
 
-		elif msg.content.lower().startswith("member! "):
+		elif msg.content.lower().startswith("!member "):
 			if msg.server == client.get_server("181866934353133570") and (msg.author.permissions_in(msg.channel).manage_messages or msg.author.id == "145464958254055425"):
 				member_role = [y for y in msg.server.roles if y.name.lower() == "member"][0]
 				if msg.content.lower().split()[1] == "all":
@@ -398,7 +398,7 @@ async def on_message(msg):
 				await client.delete_message(msg)
 
 
-		elif msg.content.lower().startswith("agree!"):
+		elif msg.content.lower().startswith("!agree"):
 			if "member" not in [x.name for x in msg.author.roles]:
 				try:
 					await client.remove_roles(msg.author, [x for x in msg.server.roles if x.name.lower() == "guest"][0])
@@ -416,31 +416,39 @@ async def on_message(msg):
 						await client.send_message(msg.channel, "an error occurred and member role was not added. please pm a mod or admin")
 
 
-		elif msg.content.lower().startswith("uptime!"):
-			uptime = int(time() - bot_startup)
-			uptime = [ int(uptime//(24*60*60))%365, int(uptime//(24*60*60))%28, int(uptime//(24*60*60))%7, int(uptime//(60*60))%24, int(uptime//60)%60, int(uptime)%60 ]
-			response =  "{} years,".format(uptime[0]) if uptime[0] else ""
-			response += " {} moons,".format(uptime[1]) if uptime[1] else ""
-			response += " {} days,".format(uptime[2]) if uptime[2] else ""
-			response += " {} hours,".format(uptime[3]) if uptime[3] else ""
-			response += " {} minutes,".format(uptime[4]) if uptime[4] else ""
-			response += " {} seconds".format(uptime[5]) if uptime[5] else ""
-			response = '`' + response + '`'
+		elif msg.content.lower().startswith("!uptime"):
+			now = time()
+			uptime = int(now - bot_startup)
+			print("debug: {} - {} = {}".format(now, bot_startup, uptime))
+			times = {}
+			keys = ["seconds","minutes","hours","days","months","years"]
+			times[keys[0]] = uptime % 60
+			times[keys[1]] = (uptime // 60) % 60
+			times[keys[2]] = (uptime // (60**2)) % 24
+			times[keys[3]] = (uptime // (24*(60**2))) % 7
+			times[keys[4]] = (uptime // (7*24*(60**2))) % 12
+			times[keys[5]] = uptime // (12*7*24*(60**2))
+			response = '`'+', '.join(["{} {}".format(times[x],x) for x in reversed(keys) if times[x]])+'`'
+			print("debug:", response)
 			await client.send_message(msg.channel, response)
 
 
-		elif msg.content.lower().startswith("help!"):
-			message = "```xl\nModeration Commands:\n\tsilence! <@user | @user list>: adds silent role to user(s)\n\t"
-			message += "unsilence! <@user>: removes silent role from user\n\tkick! <@user | @user list>: kicks user(s)\n\t"
-			message += "ban! <@user | @user list>: bans user(s)\n\tunban!: interactively unban a user\n\t"
-			message += "allowinvite! <@user | @user list>: allow user(s) to post an invitation to another server\n\t"
-			message += "clean! <number> [@user | @user list]: purge messages from chat\nGeneral Commands:\n\t"
-			message += "serverinfo!: get information on the server\n\tid! [@user | @user list | #channel | #channel list]: get user or channel ids\n\t"
-			message += "avatar! [@user | @user list]: get the avatar of one or more users\n\teval! <expression>: do math using the eval function from python\n\t"
-			message += "g! <query>: get a lmgtfy link for query```"
+		elif msg.content.lower().startswith("!topic"):
+			await client.send_message(msg.channel, '`'+msg.channel.topic+'`')
+
+
+		elif msg.content.lower().startswith("!help"):
+			message = "```xl\nModeration Commands:\n\t!silence <@user | @user list>: adds silent role to user(s)\n\t"
+			message += "!unsilence <@user>: removes silent role from user\n\t!kick <@user | @user list>: kicks user(s)\n\t"
+			message += "!ban <@user | @user list>: bans user(s)\n\t!unban: interactively unban a user\n\t"
+			message += "!allowinvite <@user | @user list>: allow user(s) to post an invitation to another server\n\t"
+			message += "!clean <number> [@user | @user list]: purge messages from chat\nGeneral Commands:\n\t"
+			message += "!serverinfo: get information on the server\n\t!id [@user | @user list | #channel | #channel list]: get user or channel ids\n\t"
+			message += "!avatar [@user | @user list]: get the avatar of one or more users\n\t!eval <expression>: do math using the eval function from python\n\t"
+			message += "!g <query>: get a lmgtfy link for query\n\t!topic: gets the topic for the channel\n\t!uptime: how long the bot has been live```"
 			if msg.server.id == "181866934353133570":
-				message = message[:-3] + "\n\tjoinrole! <rolename>: join one of the language roles :D\n\tleaverole! <rolename>: leave one of the language roles D:\n\t"
-				message += "roles!: list the available roles\n\nWe have a minecraft server! use joinrole! and join the minecraft role if you are interested```"
+				message = message[:-3] + "\n\t!joinrole <rolename>: join one of the language roles :D\n\t!leaverole <rolename>: leave one of the language roles D:\n\t"
+				message += "!roles: list the available roles\n\nWe have a minecraft server! use !joinrole and join the minecraft role if you are interested```"
 			await client.send_message(msg.channel, message)
 			await client.delete_message(msg)
 
