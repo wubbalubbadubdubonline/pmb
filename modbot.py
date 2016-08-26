@@ -299,7 +299,7 @@ async def on_message(msg):
 
 		elif msg.content.lower().startswith("!serverinfo"):
 			s = msg.server
-			await client.send_message(msg.channel, "```xl\nname: {}\nid: {}\nregion: {}\nmembers: {}\nowner: {}```\n`icon: `{}".format(s.name,s.id,s.region,len(s.members), s.owner, s.icon_url))
+			await client.send_message(msg.channel, "```xl\nname: {}\nid: {}\nregion: {}\nmembers: {}\nowner: {}\ncreated: {}```\n`icon: `{}".format(s.name, s.id, s.region, s.member_count, s.owner, s.created_at, s.icon_url))
 			await client.delete_message(msg)
 
 
