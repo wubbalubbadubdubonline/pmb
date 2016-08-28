@@ -13,10 +13,11 @@ silences = {}
 
 authed_invite = []
 
-roles = ["asm", "c", "c++", "c#", "rust", "python", "lua", 
+roles = ["asm", "c", "c++", "haskell", "c#", "rust", "python", "lua", 
 	"java", "javascript", "php", "mobile-dev", "web-dev", 
 	"perl", "ruby", "swift", "bash", "obj-c", "go", 
-	"visual-basic", "linux", "mac-os", "windows", "minecraft"]
+	"visual-basic", "lisp", "scala", "linux", "mac-os", 
+	"windows", "minecraft"]
 
 global bot_startup
 bot_startup = 0
