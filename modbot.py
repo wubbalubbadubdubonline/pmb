@@ -453,10 +453,11 @@ async def on_message(msg):
 			message += "!serverinfo: get information on the server\n\t!id [@user | @user list | #channel | #channel list]: get user or channel ids\n\t"
 			message += "!avatar [@user | @user list]: get the avatar of one or more users\n\t!eval <expression>: do math using the eval function from python\n\t"
 			message += "!g <query>: get a lmgtfy link for query\n\t!topic: gets the topic for the channel\n\t!uptime: how long the bot has been live\n\t"
-			message += "!cowsay <message>: Mooo.```"
+			message += "!cowsay <message>: Mooo."
 			if msg.server.id == "181866934353133570":
-				message = message[:-3] + "\n\t!joinrole <rolename>: join one of the language roles :D\n\t!leaverole <rolename>: leave one of the language roles D:\n\t"
-				message += "!roles: list the available roles\n\nWe have a minecraft server! use !joinrole and join the minecraft role if you are interested```"
+				message = message + "\n\t!joinrole <rolename>: join one of the language roles :D\n\t!leaverole <rolename>: leave one of the language roles D:\n\t"
+				message += "!roles: list the available roles\n\nWe have a minecraft server! use !joinrole and join the minecraft role if you are interested"
+			message += "\n\nMortyBot is opensource and you can view his source code here: https://github.com/wubbalubbadubdubonline/pmb```"
 			await client.send_message(msg.channel, message)
 			await client.delete_message(msg)
 
