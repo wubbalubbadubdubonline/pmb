@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 import discord
 import asyncio
 import sys

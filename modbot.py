@@ -127,12 +127,12 @@ async def on_ready():
 			silences = eval(f.read())
 	except:
 		pass
-	norole = [x.name for x in client.get_server("181866934353133570").members if len(x.roles) < 2]
+	norole = [x for x in client.get_server("181866934353133570").members if len(x.roles) < 2]
 	if norole:
 		for x in norole:
-			role = [x for x in member.server.roles if x.name.lower() == "guest"]
+			role = [x for x in x.server.roles if x.name.lower() == "guest"]
 			if role:
-				await client.add_roles(member, role[0])
+				await client.add_roles(x, role[0])
 
 
 @client.event
