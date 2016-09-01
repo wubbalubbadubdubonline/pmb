@@ -16,12 +16,12 @@ allowed_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'x',
 				'\n', ' ', '+', '*', '/', '-', '.', 
 				'^', '&', '|', '~', '<', '>', '[', 
 				']', ',', '!', '%', ':','y']
-allowed_words = ["math", "len", " for ", " in ", " if ", " not ", "range", 
-		"random", "==", "!=", "True", "False", "lambda", ">=", "<="]
-safe_math = [x for x in dir(math) if not x.startswith("_")]
-safe_math.extend([x for x in dir(random) if not x.startswith("_")])
-for x in safe_math:
-	allowed_words.append(x)
+allowed_words = ["len", " for ", " in ", " if ", " not ", "range", 
+		"==", "!=", "True", "False", "lambda", ">=", "<="]
+safe_math = ["math."+x for x in dir(math) if not x.startswith("_")]
+safe_math.extend(["random."+x for x in dir(random) if not x.startswith("_")])
+allowed_words.extend(safe_math)
+
 """
 def check_timeout(seconds, func, *args):
 	index = 0
