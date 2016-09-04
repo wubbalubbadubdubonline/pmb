@@ -154,7 +154,7 @@ async def on_message(msg):
 				elif '+' in x:
 					q[i] = x.replace('+','%2B')
 			if q:
-				await client.send_message(msg.channel, "http://lmgtfy.com/?q="+'+'.join(q))
+				await client.send_message(msg.channel, "https://www.google.com/search?q="+'+'.join(q))
 
 
 		elif msg.content.lower().startswith("!cowsay "):
