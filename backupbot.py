@@ -153,8 +153,10 @@ async def on_message(msg):
 					q.pop(i)
 				elif '+' in x:
 					q[i] = x.replace('+','%2B')
+				elif '#' in x:
+					q[i] = x.replace('#','%23')
 			if q:
-				await client.send_message(msg.channel, "https://www.google.com/search?q="+'+'.join(q))
+				await client.send_message(msg.channel, "https://www.duckduckgo.com/?q="+'+'.join(q))
 
 
 		elif msg.content.lower().startswith("!cowsay "):
